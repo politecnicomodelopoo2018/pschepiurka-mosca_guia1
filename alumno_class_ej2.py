@@ -61,3 +61,26 @@ class Alumno(object):
         if not mat == False:
             return mat.menorNota
 
+    def promedioMats(self):
+        suma = 0
+        for item in self.lista_materias:
+            suma += item.promNota()
+        return suma/len(self.lista_materias)
+
+    def mayProm(self):
+        if len(self.lista_materias) == 0:
+            return False
+        may = self.lista_materias[0]
+        for item in self.lista_materias:
+            if item > may:
+                may = item
+        return may
+
+    def menProm(self):
+        if len(self.lista_materias) == 0:
+            return False
+        men = self.lista_materias[0]
+        for item in self.lista_materias:
+            if item < men:
+                men = item
+        return men
