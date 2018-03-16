@@ -1,4 +1,4 @@
-from alumno_class_ej2 import Alumno
+from ej_2.alumno_class_ej2 import Alumno
 import datetime
 
 adolfito = Alumno()

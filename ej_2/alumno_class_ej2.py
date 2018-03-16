@@ -1,5 +1,5 @@
 import datetime
-from materia_class import Materia
+from ej_2.materia_class import Materia
 
 
 class Alumno(object):
