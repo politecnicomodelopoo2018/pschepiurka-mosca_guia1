@@ -35,31 +35,35 @@ class Alumno(object):
                 return edad
         return edad - 1
 
-    def agregarMateria(self, nombre_mat):
-        temp_mat = Materia()
-        temp_mat.setNombre(nombre_mat)
-        self.lista_materias.append(temp_mat)
-
     def encontrarMat(self, nombre_mat):
         for item in self.lista_materias:
             if item.getNombre() == nombre_mat:
                 return item
         return False
 
+    def agregarMateria(self, nombre_mat):
+        if not self.encontrarMat(nombre_mat) == False:
+            return False
+
+        temp_mat = Materia()
+        temp_mat.setNombre(nombre_mat)
+        self.lista_materias.append(temp_mat)
+
     def agregarNota(self, nombre_mat, nota):
         mat = self.encontrarMat(nombre_mat)
-        if not mat == False:
-            mat.agregarNota(nota)
+        if mat == False:
+            return False
+        mat.agregarNota(nota)
 
     def promMat(self, nombre_mat):
         mat = self.encontrarMat(nombre_mat)
         if not mat == False:
-            return self.encontrarMat(nombre_mat).promNota()
+            return mat.promNota()
 
     def getMenorNota(self, nombre_mat):
         mat = self.encontrarMat(nombre_mat)
         if not mat == False:
-            return mat.menorNota
+            return mat.menorNota()
 
     def promedioMats(self):
         suma = 0
@@ -70,17 +74,17 @@ class Alumno(object):
     def mayProm(self):
         if len(self.lista_materias) == 0:
             return False
-        may = self.lista_materias[0]
+        may = self.lista_materias[0].promNota()
         for item in self.lista_materias:
-            if item > may:
+            if item.promNota() > may:
                 may = item
         return may
 
     def menProm(self):
         if len(self.lista_materias) == 0:
             return False
-        men = self.lista_materias[0]
+        men = self.lista_materias[0].promNota()
         for item in self.lista_materias:
-            if item < men:
+            if item.promNota() < men:
                 men = item
         return men
