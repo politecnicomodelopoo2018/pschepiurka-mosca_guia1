@@ -6,9 +6,11 @@ class Empleado(object):
     telefono = None
     fecha_nacimiento = None
 
+    dias_en_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
     def __init__(self):
         self.dias_asistencia = []
-        self.lista_asistencias = []
+        self.lista_ingresos = []
 
     def setNombre(self, n):
         self.nombre = n
@@ -32,13 +34,29 @@ class Empleado(object):
 
     def setAsistencia(self, lista_asist):
         self.dias_asistencia = lista_asist
+
     def getAsistencia(self):
         return self.dias_asistencia
 
     def ingresoEmpresa(self, fecha, hora):
-        self.lista_asistencias.append([fecha, hora])
+        self.lista_ingresos.append([fecha, hora])
 
     def porcAsistencia(self, mes):
-        if len(self.lista_asistencias) == 0 or len(self.dias_asistencia) == 0:
+        if len(self.lista_ingresos) == 0:
+            return 0
+        if len(self.dias_asistencia) == 0:
             return False
 
+        dias_asistir = 0
+        for dia in range(self.dias_en_mes[mes - 1]):
+            dia_semana = datetime.date(datetime.date.today().year, mes, dia + 1).weekday()
+            if dia_semana < 5: # Considerar unicamente lunes a viernes
+                if self.dias_asistencia[dia_semana]:
+                    dias_asistir += 1
+
+        dias_asistidos = 0
+        for ingreso in self.lista_ingresos:
+            if ingreso[0].month == mes:
+                dias_asistidos += 1
+
+        return dias_asistidos / dias_asistir * 100

@@ -31,3 +31,12 @@ class Empresa(object):
 
         self.lista_empleados.append(emp)
 
+    def porcAsistTotal(self, mes):
+        if len(self.lista_empleados) == 0:
+            return False
+
+        porc = 0
+        for emp in self.lista_empleados:
+            porc += emp.porcAsistencia(mes)
+
+        return porc / len(self.lista_empleados)
