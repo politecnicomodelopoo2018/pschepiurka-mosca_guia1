@@ -1,4 +1,5 @@
-import datetime, calendar
+import datetime
+from calendar import monthrange
 
 class Empleado(object):
     nombre = None
@@ -39,16 +40,14 @@ class Empleado(object):
     def ingresoEmpresa(self, fecha, hora):
         self.lista_ingresos.append([fecha, hora])
 
-    def porcAsistencia(self, mes):
+    def porcAsistencia(self, año, mes):
         if len(self.lista_ingresos) == 0:
             return 0
         if len(self.dias_asistencia) == 0:
             return False
 
-        año = datetime.date.today().year
-
         dias_asistir = 0
-        for dia in range(calendar.monthrange(año, mes)[1]):
+        for dia in range(monthrange(año, mes)[1]):
             dia_semana = datetime.date(año, mes, dia + 1).weekday()
             if dia_semana < 5: # Considerar unicamente lunes a viernes
                 if self.dias_asistencia[dia_semana]:
