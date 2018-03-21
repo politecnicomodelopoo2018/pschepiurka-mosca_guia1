@@ -8,7 +8,6 @@ class Empresa(object):
 
     def setNombre(self, n):
         self.nombre = n
-
     def getNombre(self):
         return self.nombre
 
@@ -20,9 +19,6 @@ class Empresa(object):
         return None
 
     def agregarEmpleado(self, emp_nom, emp_ape, emp_tel, emp_fec):
-        if not self.encontrarEmp(emp_nom) == None:
-            return False
-
         emp = Empleado()
         emp.setNombre(emp_nom)
         emp.setApellido(emp_ape)

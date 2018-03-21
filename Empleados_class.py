@@ -1,12 +1,10 @@
-import datetime
+import datetime, calendar
 
 class Empleado(object):
     nombre = None
     apellido = None
     telefono = None
     fecha_nacimiento = None
-
-    dias_en_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
     def __init__(self):
         self.dias_asistencia = []
@@ -47,9 +45,11 @@ class Empleado(object):
         if len(self.dias_asistencia) == 0:
             return False
 
+        año = datetime.date.today().year
+
         dias_asistir = 0
-        for dia in range(self.dias_en_mes[mes - 1]):
-            dia_semana = datetime.date(datetime.date.today().year, mes, dia + 1).weekday()
+        for dia in range(calendar.monthrange(año, mes)[1]):
+            dia_semana = datetime.date(año, mes, dia + 1).weekday()
             if dia_semana < 5: # Considerar unicamente lunes a viernes
                 if self.dias_asistencia[dia_semana]:
                     dias_asistir += 1

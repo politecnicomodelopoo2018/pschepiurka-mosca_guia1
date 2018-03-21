@@ -45,3 +45,4 @@ mostrarPorc(pab, 3)
 # Porcentajes de ingreso totales empresa
 print("Porcentaje de asistencia total en el mes de " + nombre_meses[1] + ": " + str(e.porcAsistTotal(2)) + "%")
 print("Porcentaje de asistencia total en el mes de " + nombre_meses[2] + ": " + str(e.porcAsistTotal(3)) + "%")
+
