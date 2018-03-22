@@ -1,4 +1,4 @@
-from Empleados_class import Empleado
+from ej_4.Empleados_class import Empleado
 
 class Empresa(object):
     nombre = None

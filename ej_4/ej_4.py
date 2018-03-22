@@ -1,4 +1,4 @@
-from Empresa_class import Empresa
+from ej_4.Empresa_class import Empresa
 import datetime
 
 nombre_meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
