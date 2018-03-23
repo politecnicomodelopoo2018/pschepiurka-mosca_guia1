@@ -49,9 +49,8 @@ class Empleado(object):
         dias_asistir = 0
         for dia in range(monthrange(año, mes)[1]):
             dia_semana = datetime.date(año, mes, dia + 1).weekday()
-            if dia_semana < 5: # Considerar unicamente lunes a viernes
-                if self.dias_asistencia[dia_semana]:
-                    dias_asistir += 1
+            if self.dias_asistencia[dia_semana]:
+                dias_asistir += 1
 
         dias_asistidos = 0
         for ingreso in self.lista_ingresos:

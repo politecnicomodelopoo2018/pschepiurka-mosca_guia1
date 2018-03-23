@@ -40,6 +40,16 @@ for i, jug in enumerate(eq.getJugadores()):
         cap = " [capitan]"
     print("Jugador #" + str(i + 1) + cap + ": " + jug.getNombre())
 
-#print("Disp Horaria:")
-#for disp in eq.getDispHoraria():
-#
+dias_semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+print("Disponibilidad Horaria:")
+for i, disp in enumerate(eq.getDispHoraria()):
+    lista_disp = ""
+    if disp[0]:
+        lista_disp += " Mañana "
+    if disp[1]:
+        lista_disp += " Tarde "
+    if disp[2]:
+        lista_disp += " Noche "
+    if lista_disp == "":
+        lista_disp = "No disponible"
+    print("Disponibilidad " + dias_semana[i] + ": " + lista_disp)
