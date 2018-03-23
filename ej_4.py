@@ -14,7 +14,7 @@ e.agregarEmpleado("Pablo", "Escobar", "54911457", datetime.date(1949, 12, 1))
 
 # EMPLEADO ULISES
 uli = e.encontrarEmp("Ulises")
-uli.setAsistencia([True, False, False, False, True])
+uli.setAsistencia([True, False, False, False, True, False, False])
 
 # Ingresos a la empresa en febrero
 dias_ingreso = [2, 12, 16, 23]
@@ -30,7 +30,7 @@ mostrarPorc(uli, año, 3)
 
 # EMPLEADO PABLO
 pab = e.encontrarEmp("Pablo")
-pab.setAsistencia([True, True, False, False, True])
+pab.setAsistencia([True, True, False, False, True, False, False])
 
 # Ingresos a la empresa en febrero
 dias_ingreso = [2, 5, 6, 9, 12, 13, 16, 19, 20, 23, 26, 27]
