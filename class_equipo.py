@@ -6,7 +6,6 @@ class Equipo(object):
         self.barrio = barrio
 
         self.lista_jugadores = []
-        self.capitan = 0
         self.cant_jugadores = 0
 
         self.disp_horaria = []
@@ -22,16 +21,11 @@ class Equipo(object):
     def setDispHoraria(self, disph):
         self.disp_horaria = disph
 
-    def getCapitan(self):
-        return self.capitan
-
     def agregarJugador(self, nom, fechanac, es_capitan):
         if self.cant_jugadores >= 10: # Equipo lleno
             return None
 
-        jug = Jugador(nom, fechanac, self.cant_jugadores)
-        if es_capitan:
-            self.capitan = self.cant_jugadores
+        jug = Jugador(nom, fechanac, self.cant_jugadores, es_capitan)
         self.cant_jugadores += 1
 
         self.lista_jugadores.append(jug)
