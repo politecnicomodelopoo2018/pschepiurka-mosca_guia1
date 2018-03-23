@@ -17,7 +17,7 @@ del disphoraria
 
 lista_nombres = [
     "Hugo", "Enrique", "Ricardo", "Jorge", "Jeremias", "Chad", "Juan", "Alejandro", "Ramiro", "Johnson", "Raul", "Ricky",
-    "Arturo", "Gerardo"
+    "Arturo", "Gerardo", "Ulises", "Pablo"
 ]
 
 temp_nombres = lista_nombres
@@ -38,4 +38,8 @@ for i, jug in enumerate(eq.getJugadores()):
     cap = ""
     if eq.getCapitan() == i:
         cap = " [capitan]"
-    print("Jugador #" + str(i) + cap + ": " + jug.getNombre())
+    print("Jugador #" + str(i + 1) + cap + ": " + jug.getNombre())
+
+#print("Disp Horaria:")
+#for disp in eq.getDispHoraria():
+#

@@ -26,7 +26,7 @@ class Equipo(object):
         return self.capitan
 
     def agregarJugador(self, nom, fechanac, es_capitan):
-        if self.cant_jugadores >= 9: # Equipo lleno
+        if self.cant_jugadores >= 10: # Equipo lleno
             return None
 
         jug = Jugador(nom, fechanac, self.cant_jugadores)
