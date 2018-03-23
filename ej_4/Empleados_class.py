@@ -54,7 +54,7 @@ class Empleado(object):
 
         dias_asistidos = 0
         for ingreso in self.lista_ingresos:
-            if ingreso[0].month == mes:
+            if ingreso[0].month == mes and ingreso[0].year == año:
                 if self.dias_asistencia[ingreso[0].weekday()]:
                     dias_asistidos += 1
 
