@@ -28,8 +28,9 @@ for i in range(10):
     if num_cap == i:
         es_cap = True
 
-    id_nombre = randint(0, len(temp_nombres) - 1)
-    eq.agregarJugador(temp_nombres[randint(0, len(temp_nombres) - 1)], fechanac, es_cap)
+    jug_nombre = temp_nombres[randint(0, len(temp_nombres) - 1)]
+    eq.agregarJugador(jug_nombre, fechanac, es_cap)
+    temp_nombres.remove(jug_nombre)
 del lista_nombres
 del num_cap
 
