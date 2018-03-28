@@ -31,18 +31,28 @@ class Torneo(object):
                     if eq.disponible_en(dia, hor):
                         equipos.append(eq)
 
-                print(combinations(equipos, 2))
+                for comb in list(combinations(equipos, 2)):
+                    part = Partido(dia, hor, comb)
+                    partidos_disp.append(part)
 
-        #for part in partidos_disp:
-        #    for part_comp in partidos_disp:
-        #        if part == part_comp: continue
+        partidos_comb = []
+        for comb in list(combinations(partidos_disp, 2)):
+            contador_comb = 0
+            for i in range(2):
+                for j in range(2):
+                    if comb[0].getEquipos()[i].getNombre() == comb[1].getEquipos()[j].getNombre():
+                        contador_comb += 1
 
-         #       contador_coinciden = 0
-         #       for i in range(2):
-         #           for j in range(2):
-         #               if part.getEquipos[i] == part_comp.getEquipos[j]:
-         #                   contador_coinciden += 1
+            if contador_comb >= 2:
+                añadio = False
+                for c in partidos_comb:
+                    if comb[0].getEquipos() == c[0]:
+                        c[1] += 1
+                        añadio = True
 
-          #      if contador_coinciden >= 2:
+                if not añadio:
+                    partidos_comb.append([comb[0].getEquipos(), 1])
 
-
+        lista_fixture = []
+        for p in partidos_comb:
+            print(p[0][0].getNombre() + ' vs ' + p[0][1].getNombre() + ' x ' + str(p[1]))
