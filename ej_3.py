@@ -1,6 +1,7 @@
 from class_equipo import Equipo
 from class_torneo import Torneo
 from random import randint, seed
+from copy import deepcopy
 
 def randbool():
     ran = randint(1,2)
@@ -20,7 +21,7 @@ lista_nombres = [
 ]
 
 def generar_jugadores(equipo):
-    temp_nombres = lista_nombres
+    temp_nombres = deepcopy(lista_nombres)
     num_cap = randint(0, 9)
     for i in range(10):
         fechanac = str(randint(1, 28)) + " " + str(randint(1, 12)) + " " + str(randint(1979, 1999))
@@ -34,18 +35,30 @@ def generar_jugadores(equipo):
 
 seed()
 
+obj_torneo = Torneo("Invitacional Liniers 2018")
+
 equipos = []
 # Equipo Los Verdes de Liniers
 eq_lv = Equipo("Los Verdes", "Liniers")
 eq_lv.setDispHoraria(generar_disph())
 generar_jugadores(eq_lv)
-equipos.append(eq_lv)
+obj_torneo.agregarEquipo(eq_lv)
 
+# Equipo Los Rojos de Lanus
 eq_lr = Equipo("Los Rojos", "Lanus")
 eq_lr.setDispHoraria(generar_disph())
 generar_jugadores(eq_lr)
-equipos.append(eq_lr)
+obj_torneo.agregarEquipo(eq_lr)
 
+# Equipos Los Naranjas de Velez
+eq_ln = Equipo("Los Naranjas", "Velez")
+eq_ln.setDispHoraria(generar_disph())
+generar_jugadores(eq_ln)
+obj_torneo.agregarEquipo(eq_ln)
+
+obj_torneo.crearFixture()
+
+"""
 dias_semana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
 for eq in equipos:
     print("Jugadores para el equipo " + eq.getNombre() + " localizado en " + eq.getBarrio() + ":")
@@ -67,5 +80,4 @@ for eq in equipos:
         if lista_disp == "":
             lista_disp = "No disponible"
         print("Disponibilidad " + dias_semana[i] + ": " + lista_disp)
-
-obj_torneo = Torneo("Invitacional Liniers 2018")
+"""

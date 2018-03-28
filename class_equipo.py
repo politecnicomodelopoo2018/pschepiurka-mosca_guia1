@@ -21,6 +21,9 @@ class Equipo(object):
     def setDispHoraria(self, disph):
         self.disp_horaria = disph
 
+    def disponible_en(self, dia, horario):
+        return self.disp_horaria[dia][horario]
+
     def agregarJugador(self, nom, fechanac, es_capitan):
         if self.cant_jugadores >= 10: # Equipo lleno
             return None
