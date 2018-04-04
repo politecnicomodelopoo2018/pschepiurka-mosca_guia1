@@ -1,4 +1,4 @@
-from class_jugador import Jugador
+from ej_3.class_jugador import Jugador
 
 class Equipo(object):
     def __init__(self, nombre, barrio):

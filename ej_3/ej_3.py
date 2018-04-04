@@ -1,5 +1,5 @@
-from class_equipo import Equipo
-from class_torneo import Torneo
+from ej_3.class_equipo import Equipo
+from ej_3.class_torneo import Torneo
 from random import randint, seed
 from copy import deepcopy
 

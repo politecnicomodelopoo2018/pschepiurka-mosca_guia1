@@ -1,5 +1,4 @@
-from class_equipo import Equipo
-from class_partido import Partido
+from ej_3.class_partido import Partido
 from itertools import combinations
 
 class Torneo(object):
