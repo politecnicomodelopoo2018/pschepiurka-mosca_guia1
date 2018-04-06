@@ -20,7 +20,7 @@ class Empresa(object):
 
         self.lista_empleados.append(temp_emp)
 
-    def crearLlamada(self,telefono_origen, nombre, apellido, duracion):
+    def llamarEmpleado(self,telefono_origen, nombre, apellido):
         for empleado in self.lista_empleados:
             if empleado.nombre == nombre and empleado.apellido == apellido:
                 temp_llamada = Llamada()
@@ -28,9 +28,9 @@ class Empresa(object):
                 temp_llamada.telefono_origen = telefono_origen
                 temp_llamada.telefono_destino = empleado.telefono
                 temp_llamada.fecha_inicial = datetime.date.today()
-                temp_llamada.duracion = duracion
 
-                self.lista_llamadas.append(temp_llamada)
-                return True
+                return temp_llamada
 
         return False
+
+    def colgarEmpleado(self, llamada_inc, duracion):
