@@ -1,6 +1,3 @@
-import datetime
-
-
 class Persona(object):
     nombre = None
     fecha_nacimiento = None

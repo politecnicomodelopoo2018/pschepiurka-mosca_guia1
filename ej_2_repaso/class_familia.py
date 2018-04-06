@@ -1,6 +1,5 @@
 from ej_2_repaso.class_persona import Persona
 
-
 class Familia:
     apellido = None
 
@@ -41,4 +40,4 @@ class Familia:
         for persona in self.miembros:
             if persona.promTotalCalorias() > may_calorias:
                 may_calorias = persona.promTotalCalorias()
-        return may_calorias
+        return persona.nombre
