@@ -35,9 +35,9 @@ class Familia:
         return men_calorias
 
     def mayCaloriasFam(self):
-        may_calorias = self.miembros[0].promTotalCalorias()
+        may_calorias = self.miembros[0]
 
         for persona in self.miembros:
-            if persona.promTotalCalorias() > may_calorias:
-                may_calorias = persona.promTotalCalorias()
-        return persona.nombre
+            if persona.promTotalCalorias() > may_calorias.promTotalCalorias():
+                may_calorias = persona
+        return may_calorias
