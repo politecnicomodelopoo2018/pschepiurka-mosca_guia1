@@ -1,6 +1,5 @@
-from class_persona import Persona
-from class_comida import Comida
-import datetime
+from ej_2_repaso.class_persona import Persona
+
 
 class Familia:
     apellido = None
@@ -20,9 +19,26 @@ class Familia:
         for persona in self.miembros:
             if persona.nombre == nombre:
                 return persona.promTotalCalorias()
+        return False
 
     def promTotalFam(self):
         prom_total = 0
         for persona in self.miembros:
             prom_total += persona.promTotalCalorias()
         return prom_total/len(self.miembros)
+
+    def menCaloriasFam(self):
+        men_calorias = self.miembros[0].promTotalCalorias()
+
+        for persona in self.miembros:
+            if persona.promTotalCalorias() < men_calorias:
+                men_calorias = persona.promTotalCalorias()
+        return men_calorias
+
+    def mayCaloriasFam(self):
+        may_calorias = self.miembros[0].promTotalCalorias()
+
+        for persona in self.miembros:
+            if persona.promTotalCalorias() > may_calorias:
+                may_calorias = persona.promTotalCalorias()
+        return may_calorias

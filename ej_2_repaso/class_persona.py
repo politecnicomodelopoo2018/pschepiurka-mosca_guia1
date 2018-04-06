@@ -15,7 +15,9 @@ class Persona(object):
     def promTotalCalorias(self):
         sum_calorias = 0
 
-        for comida in self.comida_consumida:
-            sum_calorias += comida.calorias
-        return sum_calorias/len(self.comida_consumida)
+        if len(self.comida_consumida) != 0:
+            for comida in self.comida_consumida:
+                sum_calorias += comida.calorias
+            return sum_calorias/len(self.comida_consumida)
 
+        return False
