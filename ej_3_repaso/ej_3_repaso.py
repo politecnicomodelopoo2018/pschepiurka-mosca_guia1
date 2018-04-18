@@ -1,4 +1,4 @@
-from class_empresa import Empresa
+from ej_3_repaso.class_empresa import Empresa
 
 nasa = Empresa()
 

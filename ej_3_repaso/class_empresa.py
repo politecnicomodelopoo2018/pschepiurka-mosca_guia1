@@ -1,5 +1,5 @@
-from class_empleado import Empleado
-from class_llamada import Llamada
+from ej_3_repaso.class_empleado import Empleado
+from ej_3_repaso.class_llamada import Llamada
 import datetime
 
 class Empresa(object):
