@@ -1,5 +1,5 @@
-from class_artista import Artista
-from class_autor import Autor
+from ej_5.class_artista import Artista
+from ej_5.class_autor import Autor
 
 
 class Cancion(object):

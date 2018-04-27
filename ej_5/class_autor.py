@@ -1,4 +1,4 @@
-from class_persona import Persona
+from ej_5.class_persona import Persona
 
 
 class Autor(Persona):
