@@ -1,4 +1,4 @@
-from class_empresa import Empresa
+from ej_6.class_empresa import Empresa
 
 ford = Empresa
 ford.agregarAuto("IVX 076", 5, 2010, False)

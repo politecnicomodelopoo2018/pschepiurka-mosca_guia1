@@ -1,5 +1,5 @@
-from class_auto import Auto
-from class_camioneta import Camioneta
+from ej_6.class_auto import Auto
+from ej_6.class_camioneta import Camioneta
 
 
 class Empresa(object):
