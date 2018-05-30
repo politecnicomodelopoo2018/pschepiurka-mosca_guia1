@@ -1,7 +1,4 @@
-from class_alumno import Alumno
-from class_profesor import Profesor
-from class_plato import Plato
-from class_pedido import Pedido
+from ej_7.class_plato import Plato
 
 lista_alumnos = []
 lista_profesores = []

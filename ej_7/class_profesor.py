@@ -1,4 +1,4 @@
-from class_persona import Persona
+from ej_7.class_persona import Persona
 
 
 class Profesor(Persona):
