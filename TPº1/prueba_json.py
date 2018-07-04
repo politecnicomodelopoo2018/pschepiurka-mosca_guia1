@@ -1,4 +1,4 @@
-import carga_json
+from TPº1 import carga_json
 
 carga_json.load_planes()
 

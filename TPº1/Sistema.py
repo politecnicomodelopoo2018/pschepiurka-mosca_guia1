@@ -1,6 +1,6 @@
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # CARGA DE LAS LISTAS
-import carga_json
+from TPº1 import carga_json
 
 carga_json.load_planes()
 
@@ -22,7 +22,7 @@ carga_json.load_flies(lista_tripulacion, lista_pasajeros)
 
 lista_vuelos = carga_json.fly_list
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-from Servicio import Servicio
+from TPº1.Servicio import Servicio
 
 def mostrarPasajerosVuelos():
     lista_pasajeros_vuelos = []

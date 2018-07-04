@@ -1,4 +1,4 @@
-from Tripulacion import Tripulacion
+from TPº1.Tripulacion import Tripulacion
 
 
 class Servicio(Tripulacion):

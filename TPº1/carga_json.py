@@ -2,13 +2,12 @@
 # /// ARCHIVO EXCLUSIVO PARA CARGAR EL JSON ///
 # ////////////////////////////////////////////
 
-from Pasajero import Pasajero
-from Piloto import Piloto
-from Servicio import Servicio
-from Avion import Avion
-from Vuelo import Vuelo
+from TPº1.Pasajero import Pasajero
+from TPº1.Piloto import Piloto
+from TPº1.Servicio import Servicio
+from TPº1.Avion import Avion
+from TPº1.Vuelo import Vuelo
 
-import datetime
 import json
 
 f = open("datos.json", "r")

@@ -1,4 +1,4 @@
-from Persona import Persona
+from TPº1.Persona import Persona
 
 
 class Tripulacion(Persona):
