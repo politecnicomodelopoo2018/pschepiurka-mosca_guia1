@@ -4,5 +4,5 @@ with open('carga_json.py', 'r') as f:
         line = line.replace('\t', '    ')
         lines.append(line)
 
-with open('msfrpc_smb.py', 'w') as f:
+with open('carga_json.py', 'w') as f:
     f.writelines(lines)
