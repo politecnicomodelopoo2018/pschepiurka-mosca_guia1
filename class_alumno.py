@@ -9,5 +9,5 @@ class Alumno(Persona):
         self.curso = curso
 
     def insertAlumno(self):
-        DB().run("insert into Alumno values(NULL, %s, %s, %s, %i)"
+        DB().run("insert into Alumno values(NULL, '%s', '%s', '%s', %i)"
                  % (self.nombre, self.apellido, str(self.fecha_nacimiento), self.curso.idCurso))
