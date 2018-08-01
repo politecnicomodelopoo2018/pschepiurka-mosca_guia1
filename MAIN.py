@@ -86,13 +86,12 @@ while loop:
                 temp_alum.setApellido(apell)
                 temp_alum.setFechaNac(int(fecha_nac_spliteada[2]), int(fecha_nac_spliteada[1]), int(fecha_nac_spliteada[0]))
 
-                temp_curs = Curso()
-                verif2 = temp_curs.getCursoDB(curso)
+                verif2 = Curso().getCursoDB(curso)
                 if verif2 is False:
                     while verif2 is False:
                         print("El curso ingresado no existe, vuelva a ingresar un curso valido.")
                         curso = input("Reingrese el curso: ")
-                        verif2 = temp_curs.getCursoDB(curso)
+                        verif2 = Curso().getCursoDB(curso)
                 temp_alum.setCurso(verif2)
 
                 temp_alum.insertAlumno()
@@ -100,8 +99,31 @@ while loop:
             elif int(op) == 2:
                 alumno_data = DB().run("select * from Alumno")
                 if alumno_data.__len__() == 0:
-                    print("Alumno no tiene datos, inserte algun valor primero.")
+                    print("\nAlumno no tiene datos, inserte algun valor primero.")
                     input("Presione cualquier tecla para retornar al menu.")
+                else:
+                    os.system("clear")
+                    print("¿Cual es el nombre del alumno que desea modificar?")
+                    nombre = input("Ingrese el nombre completo del alumno: ")
+
+                    nombre_separado = nombre.split(" ", 1)
+
+                    alumno = Alumno.getAlumno(nombre_separado[0], nombre_separado[1])
+
+                    if alumno is False:
+                        print("\nEl alumno no existe.")
+                        print("Presione una tecla para continuar...")
+                        input()
+                    else:
+                        os.system("clear")
+                        alumno = Alumno().getAlumno(nombre_separado[0], nombre_separado[1])
+                        new_nom = input("Ingrese (si quiere) un nuevo nombre: ")
+                        new_apell = input("Ingrese (si quiere) un nuevo apellido: ")
+                        new_curso = input("Ingrese (si quiere) un nuevo curso: ")
+                        new_fecha_nac = input("Ingrese (si quiere) una nueva fecha de nacimiento: ")
+
+
+
 
             elif int(op) == 3:
                 alumno_data = DB().run("select * from Alumno")
