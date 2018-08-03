@@ -48,21 +48,24 @@ while loop:
         elif int(op_curs) == 2:
             os.system("clear")
             curso_data = DB().run("select * from Curso")
-            if curso_data.__len__() == 0:
+            curso_data_fetch = curso_data.fetchall()
+            if curso_data_fetch.__len__() == 0:
                 print("No hay datos insertados en Curso.")
                 input("Presione cualquier tecla para volver al menu.")
 
         elif int(op_curs) == 3:
             os.system("clear")
             curso_data = DB().run("select * from Curso")
-            if curso_data.__len__() == 0:
+            curso_data_fetch = curso_data.fetchall()
+            if curso_data_fetch.__len__() == 0:
                 print("No hay datos insertados en Curso.")
                 input("Presione cualquier tecla para volver al menu.")
 
     elif int(opcion) == 3:
         os.system("clear")
         curso_data = DB().run("select * from Curso")
-        if curso_data.__len__() == 0:
+        curso_data_fetch = curso_data.fetchall()
+        if curso_data_fetch.__len__() == 0:
             print("No hay datos insertados en Curso.")
             input("Presione cualquier tecla para volver al menu.")
         else:
@@ -98,17 +101,26 @@ while loop:
 
             elif int(op) == 2:
                 alumno_data = DB().run("select * from Alumno")
-                if alumno_data.__len__() == 0:
+                alumno_data_fetch = alumno_data.fetchall()
+                if alumno_data_fetch.__len__() == 0:
                     print("\nAlumno no tiene datos, inserte algun valor primero.")
                     input("Presione cualquier tecla para retornar al menu.")
                 else:
                     os.system("clear")
-                    print("¿Cual es el nombre del alumno que desea modificar?")
-                    nombre = input("Ingrese el nombre completo del alumno: ")
+                    lista_alumnos = Alumno.selectListaAlumnos()
+                    for alumno in lista_alumnos:
+                        print("ID: " + str(alumno.idPersona) +
+                              " - Nombre: " + alumno.nombre +
+                              " - Apellido: " + alumno.apellido +
+                              " - Fecha de Nacimiento: " + str(alumno.fecha_nacimiento) +
+                              " - Curso: " + alumno.curso.codigo)
 
-                    nombre_separado = nombre.split(" ", 1)
+                    print("¿Que ID desea modificar?")
+                    alumno_id = input("Ingrese el ID: ")
 
-                    alumno = Alumno.getAlumno(nombre_separado[0], nombre_separado[1])
+                    alumno = Alumno
+
+                    alumno.getAlumno(alumno_id)
 
                     if alumno is False:
                         print("\nEl alumno no existe.")
@@ -116,17 +128,31 @@ while loop:
                         input()
                     else:
                         os.system("clear")
-                        alumno = Alumno().getAlumno(nombre_separado[0], nombre_separado[1])
                         new_nom = input("Ingrese (si quiere) un nuevo nombre: ")
                         new_apell = input("Ingrese (si quiere) un nuevo apellido: ")
                         new_curso = input("Ingrese (si quiere) un nuevo curso: ")
-                        new_fecha_nac = input("Ingrese (si quiere) una nueva fecha de nacimiento: ")
+                        new_fecha_nac = input("Ingrese (si quiere) una nueva fecha de nacimiento (Formato: DD/MM/AA): ")
 
+                        new_fecha_nac_separada = new_fecha_nac.split("/", 2)
 
+                        alumno.setNombre(new_nom)
+                        alumno.setApellido(new_apell)
+                        alumno.setFechaNac(int(new_fecha_nac_separada[2]), int(new_fecha_nac_separada[1]),
+                                           int(new_fecha_nac_separada[0]))
+                        alumno.setCurso(Curso.getCursoDB(new_curso))
+
+                        alumno.actualizarAlumno()
+
+                        print("\nAlumno actualizado.")
+                        input("Presione cualquier tecla para continuar...")
 
 
             elif int(op) == 3:
                 alumno_data = DB().run("select * from Alumno")
-                if alumno_data.__len__() == 0:
+                alumno_data_fetch = alumno_data.fetchall()
+                if alumno_data_fetch.__len__() == 0:
                     print("Alumno no tiene datos, inserte algun valor primero.")
                     input("Presione cualquier tecla para volver al menu.")
+
+                else:
+                    print("Ingrese el ID")

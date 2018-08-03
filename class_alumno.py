@@ -13,27 +13,44 @@ class Alumno(Persona):
         DB().run("insert into Alumno values(NULL, '%s', '%s', '%s', %i)"
                  % (self.nombre, self.apellido, str(self.fecha_nacimiento), self.curso.idCurso))
 
-    def actualizarAlumno(self, nom, apell, ):
-        DB().run
+    def actualizarAlumno(self):
+        DB().run("update Alumno set nombre = '" + self.nombre +
+                 "', apellido = '" + self.apellido +
+                 "', fecha_nacimiento = '" + str(self.fecha_nacimiento) +
+                 "', Curso_idCurso = " + str(self.curso.idCurso)
+                 + " where idAlumno = " + str(self.idPersona) + ";")
 
     @staticmethod
     def selectListaAlumnos():
+        temp_students_list = []
         students_dictionary = DB().run("select * from Alumno")
-        return students_dictionary
+        for student in students_dictionary:
+            temp_student = Alumno()
+            temp_student.setID(student["idAlumno"])
+            temp_student.setNombre(student["nombre"])
+            temp_student.setApellido(student["apellido"])
+
+            fecha_nac = str(student["fecha_nacimiento"]).split("-", 2)
+            temp_student.setFechaNac(int(fecha_nac[0]), int(fecha_nac[1]), int(fecha_nac[2]))
+
+            print(student["Curso_idCurso"])
+            temp_student.setCurso(Curso.getCursoDB(student["Curso_idCurso"]))
+            temp_students_list.append(temp_student)
+
+        return temp_students_list
 
     @staticmethod
-    def getAlumno(nom, apell):
-        students_dictionary = Alumno.selectListaAlumnos()
+    def getAlumno(id):
+        students_dictionary = DB().run("select * from Alumno where idAlumno = " + id)
         for student in students_dictionary:
-            if student["nombre"] == nom and student["apellido"] == apell:
-                temp_alum = Alumno()
-                temp_alum.setID(student["idAlumno"])
-                temp_alum.setNombre(student["nombre"])
-                temp_alum.setApellido(student["apellido"])
-                temp_alum.setCurso(Curso().getCursoDB(student["Curso_idCurso"]))
+            temp_alum = Alumno()
+            temp_alum.setID(student["idAlumno"])
+            temp_alum.setNombre(student["nombre"])
+            temp_alum.setApellido(student["apellido"])
+            temp_alum.setCurso(Curso().getCursoDB(student["Curso_idCurso"]))
 
-                #fecha_spliteada = str(student)
+            #fecha_spliteada = str(student)
 
-                temp_alum.fecha_nacimiento = student["fecha_nacimiento"]
+            temp_alum.fecha_nacimiento = student["fecha_nacimiento"]
 
         return temp_alum

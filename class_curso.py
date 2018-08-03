@@ -13,14 +13,15 @@ class Curso(object):
 
     @staticmethod
     def getCursoDB(curs_codigo):
-        curso_data = DB().run("select * from Curso")
-        for line in curso_data:
-            if line["codigo"] == curs_codigo:
-                temp_curs = Curso()
-                temp_curs.setID(line["idCurso"])
-                temp_curs.setCurso(line["codigo"])
-                return temp_curs
-        return False
+        curso_data = DB().run("select * from Curso where idCurso = " + str(curs_codigo))
+        d = curso_data.fetchall()
+        if len(d) == 0:
+            return False
+        temp_curs = Curso()
+        temp_curs.setID(d["idCurso"])
+        temp_curs.setCurso(d["codigo"])
+        return temp_curs
+
 
     def insertCurso(self):
         DB().run("insert into Curso values(%s, '%s')" % ("NULL", self.codigo))
