@@ -81,7 +81,7 @@ while loop:
                 apell = input("Ingrese el apellido del alumno: ")
                 fecha_nac = input("Ingrese la fecha de nacimiento del alumno (utilice '/'): ")
                 fecha_nac_spliteada = fecha_nac.split("/", 2)
-                curso = input("Ingrese el curso al que asiste el alumno: ")
+                curso_id = input("Ingrese el curso al que asiste el alumno: ")
 
                 temp_alum = Alumno()
 
@@ -89,7 +89,7 @@ while loop:
                 temp_alum.setApellido(apell)
                 temp_alum.setFechaNac(int(fecha_nac_spliteada[2]), int(fecha_nac_spliteada[1]), int(fecha_nac_spliteada[0]))
 
-                verif2 = Curso().getCursoDB(curso)
+                verif2 = Curso().getCursoDB(curso_id)
                 if verif2 is False:
                     while verif2 is False:
                         print("El curso ingresado no existe, vuelva a ingresar un curso valido.")
@@ -115,12 +115,10 @@ while loop:
                               " - Fecha de Nacimiento: " + str(alumno.fecha_nacimiento) +
                               " - Curso: " + alumno.curso.codigo)
 
-                    print("¿Que ID desea modificar?")
+                    print("\n¿Que ID desea modificar?")
                     alumno_id = input("Ingrese el ID: ")
 
-                    alumno = Alumno
-
-                    alumno.getAlumno(alumno_id)
+                    alumno = Alumno.getAlumno(alumno_id)
 
                     if alumno is False:
                         print("\nEl alumno no existe.")
@@ -155,4 +153,17 @@ while loop:
                     input("Presione cualquier tecla para volver al menu.")
 
                 else:
-                    print("Ingrese el ID")
+                    os.system("clear")
+                    lista_alumnos = Alumno.selectListaAlumnos()
+                    for alumno in lista_alumnos:
+                        print("ID: " + str(alumno.idPersona) +
+                              " - Nombre: " + alumno.nombre +
+                              " - Apellido: " + alumno.apellido +
+                              " - Fecha de Nacimiento: " + str(alumno.fecha_nacimiento) +
+                              " - Curso: " + alumno.curso.codigo)
+
+                    alum_id = input("\nIngrese el ID del alumno que desea eliminar: ")
+                    Alumno().borrarAlumno(alum_id)
+
+                    print("\nAlumno borrado exitosamente.")
+                    input("Presione cualquier tecla para continuar...")

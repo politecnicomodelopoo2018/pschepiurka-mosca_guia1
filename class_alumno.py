@@ -33,7 +33,6 @@ class Alumno(Persona):
             fecha_nac = str(student["fecha_nacimiento"]).split("-", 2)
             temp_student.setFechaNac(int(fecha_nac[0]), int(fecha_nac[1]), int(fecha_nac[2]))
 
-            print(student["Curso_idCurso"])
             temp_student.setCurso(Curso.getCursoDB(student["Curso_idCurso"]))
             temp_students_list.append(temp_student)
 
@@ -54,3 +53,7 @@ class Alumno(Persona):
             temp_alum.fecha_nacimiento = student["fecha_nacimiento"]
 
         return temp_alum
+
+    @staticmethod
+    def borrarAlumno(id_alumno):
+        DB().run("delete from Alumno where idAlumno = " + str(id_alumno))
