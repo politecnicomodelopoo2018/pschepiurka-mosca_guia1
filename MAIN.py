@@ -52,6 +52,21 @@ while loop:
             if curso_data_fetch.__len__() == 0:
                 print("No hay datos insertados en Curso.")
                 input("Presione cualquier tecla para volver al menu.")
+            else:
+                lista_curso = Curso().getListaCurso()
+                for curso in lista_curso:
+                    print("ID: " + str(curso.idCurso) + " - Codigo: " + curso.codigo)
+
+                edit_op = input("\nIngrese el ID del curso que desea modificar: ")
+                curso = Curso().getCursoDB(int(edit_op))
+
+                new_codigo = input("Ingrese el nuevo codigo del curso: ")
+
+                curso.setCurso(new_codigo)
+
+                curso.actualizarCurso()
+                print("\nCurso actualizado.")
+                input("Presione cualquier tecla para continuar...")
 
         elif int(op_curs) == 3:
             os.system("clear")
@@ -60,6 +75,9 @@ while loop:
             if curso_data_fetch.__len__() == 0:
                 print("No hay datos insertados en Curso.")
                 input("Presione cualquier tecla para volver al menu.")
+
+    elif int(opcion) == 2:
+        pass
 
     elif int(opcion) == 3:
         os.system("clear")
