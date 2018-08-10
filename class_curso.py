@@ -61,7 +61,6 @@ class Curso(object):
     def eliminarCurso(self):
         DB().run("delete from Curso where idCurso = " + str(self.idCurso))
 
-
     def verificarCurso(self):
         count = DB().run("select count(*) as cantidad from Alumno where Curso_idCurso = " + str(self.idCurso))
         count_fetch = count.fetchall()
