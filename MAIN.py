@@ -27,33 +27,31 @@ while loop:
     if int(opcion) == 1:
         os.system("clear")
         print("¿Que desea hacer con Curso?: \n")
-        print("1. Crear Curso \n")
-        print("2. Editar Curso \n")
-        print("3. Eliminar Curso \n")
+        print("1. Crear Curso")
+        print("2. Editar Curso")
+        print("3. Eliminar Curso")
+        print("4. Mostrar Cursos \n")
         op_curs = input("\nIngrese la opcion correspondiente: ")
 
         if int(op_curs) == 1:
+            os.system("clear")
             curs_cod = input("Ingrese el codigo del curso: ")
 
-            os.system("clear")
             verif = Curso.getCursoDB(curs_cod)
             if verif is False:
                 temp_curs = Curso()
                 temp_curs.setCurso(curs_cod)
                 temp_curs.insertCurso()
+                print("\nCurso creado.")
+                input("Presione una tecla para continuar...")
             else:
                 print("\nEl codigo del curso ingresado ya existe.")
                 input("Presione cualquier tecla para volver al menu.")
 
         elif int(op_curs) == 2:
             os.system("clear")
-            curso_data = DB().run("select * from Curso")
-            curso_data_fetch = curso_data.fetchall()
-            if curso_data_fetch.__len__() == 0:
-                print("No hay datos insertados en Curso.")
-                input("Presione cualquier tecla para volver al menu.")
-            else:
-                lista_curso = Curso().getListaCurso()
+            lista_curso = Curso().getListaCurso()
+            if len(lista_curso) != 0:
                 for curso in lista_curso:
                     print("ID: " + str(curso.idCurso) + " - Codigo: " + curso.codigo)
 
@@ -67,17 +65,93 @@ while loop:
                 curso.actualizarCurso()
                 print("\nCurso actualizado.")
                 input("Presione cualquier tecla para continuar...")
+            else:
+                print("Curso no tiene datos cargados.")
+                input("Presione cualquier tecla para continuar.")
 
         elif int(op_curs) == 3:
+            lista_curso = Curso().getListaCurso()
+            if len(lista_curso) != 0:
+                for curso in lista_curso:
+                    ver = curso.verificarCurso()
+                    print("ID: " + str(curso.idCurso) +
+                          " - Codigo: " + curso.codigo +
+                          " - Cantidad Alumnos: " + str(ver[0]["cantidad"]))
+
+                curs_id = input("Ingrese el ID del curso que desea eliminar: ")
+                curso = Curso().getCursoDB(int(curs_id))
+                ver_curso = curso.verificarCurso()
+
+                if ver_curso[0]["cantidad"] == 0 and curso is not False:
+                    curso.eliminarCurso()
+                    print("\nCurso eliminado.")
+                    input("Presione una tecla para continuar...")
+                elif ver_curso[0]["cantidad"] > 0 and curso is not False:
+                    print("\nNo se pudo eliminar debido a que tiene alumnos dentro.")
+                    input("Presione una tecla para continuar...")
+                else:
+                    print("\nEl curso no existe.")
+                    input("Presione una tecla para continuar...")
+            else:
+                print("Curso no tiene datos cargados.")
+                input("Presione una tecla para continuar...")
+
+        elif int(op_curs) == 4:
             os.system("clear")
-            curso_data = DB().run("select * from Curso")
-            curso_data_fetch = curso_data.fetchall()
-            if curso_data_fetch.__len__() == 0:
-                print("No hay datos insertados en Curso.")
-                input("Presione cualquier tecla para volver al menu.")
+            lista_curso = Curso().getListaCurso()
+            for curso in lista_curso:
+                ver = Curso.verificarCurso(curso)
+                print("ID: " + str(curso.idCurso) +
+                      " - Codigo: " + curso.codigo +
+                      " - Cantidad Alumnos: " + str(ver[0]["cantidad"]))
+
+            print("\nLista cargada exitosamente.")
+            input("Presione cualquier boton para continuar...")
 
     elif int(opcion) == 2:
-        pass
+        os.system("clear")
+        curso_data = DB().run("select * from Curso")
+        curso_data_fetch = curso_data.fetchall()
+        if curso_data_fetch.__len__() == 0:
+            print("No hay datos insertados en Curso.")
+            input("Presione cualquier tecla para volver al menu.")
+        else:
+            print("¿Que desea hacer con Profesor?: \n")
+            print("1. Crear Profesor")
+            print("2. Editar Profesor")
+            print("3. Eliminar Profesor \n")
+
+            op_prof = input("\nIngrese la opcion correspondiente: ")
+
+            if int(op_prof) == 1:
+                os.system("clear")
+                nom = input("Ingrese el nombre del profesor: ")
+                apell = input("Ingrese el apellido del profesor: ")
+                fecha_nac = input("Ingrese la fecha de nacimiento del profesor (utilice '/'): ")
+
+                prof = Profesor()
+
+                prof.setNombre(nom)
+                prof.setApellido(apell)
+
+                fecha_nac_split = fecha_nac.split("/", 2)
+
+                prof.setFechaNac(int(fecha_nac_split[2]), int(fecha_nac_split[1]), int(fecha_nac_split[0]))
+
+                prof.insertProfesor()
+
+                print("\nSe ha creado el profesor correctamente.")
+                input("Presione cualquier tecla para continuar...")
+            elif int(op_prof) == 2:
+                os.system("clear")
+                curs = DB().run("select * from Profesor")
+                curs_fetch = curs.fetchall()
+                if len(curs_fetch) == 0:
+                    print("Profesor no tiene datos insertados.")
+                    input("Presione cualquier boton para continuar...")
+                else:
+                    pass
+
 
     elif int(opcion) == 3:
         os.system("clear")
@@ -88,9 +162,10 @@ while loop:
             input("Presione cualquier tecla para volver al menu.")
         else:
             print("¿Que desea hacer con Alumno?: \n")
-            print("1. Crear Alumno \n")
-            print("2. Editar Alumno \n")
-            print("3. Eliminar Alumno \n")
+            print("1. Crear Alumno")
+            print("2. Editar Alumno")
+            print("3. Eliminar Alumno")
+            print("4. Mostrar Alumnos \n")
             op = input("\nIngrese la opcion correspondiente: ")
 
             if int(op) == 1:
@@ -151,11 +226,15 @@ while loop:
 
                         new_fecha_nac_separada = new_fecha_nac.split("/", 2)
 
-                        alumno.setNombre(new_nom)
-                        alumno.setApellido(new_apell)
-                        alumno.setFechaNac(int(new_fecha_nac_separada[2]), int(new_fecha_nac_separada[1]),
-                                           int(new_fecha_nac_separada[0]))
-                        alumno.setCurso(Curso.getCursoDB(new_curso))
+                        if new_nom is not '':
+                            alumno.setNombre(new_nom)
+                        if new_apell is not '':
+                            alumno.setApellido(new_apell)
+                        if new_fecha_nac is not '':
+                            alumno.setFechaNac(int(new_fecha_nac_separada[2]), int(new_fecha_nac_separada[1]),
+                                               int(new_fecha_nac_separada[0]))
+                        if new_curso is not '':
+                            alumno.setCurso(Curso.getCursoDB(new_curso))
 
                         alumno.actualizarAlumno()
 
@@ -181,7 +260,32 @@ while loop:
                               " - Curso: " + alumno.curso.codigo)
 
                     alum_id = input("\nIngrese el ID del alumno que desea eliminar: ")
-                    Alumno().borrarAlumno(alum_id)
+                    alumno = Alumno().getAlumno(alum_id)
+                    if alumno is False:
+                        print("\nEl alumno no existe.")
+                        input("Presione una tecla para continuar...")
+                    else:
+                        alumno.borrarAlumno()
 
-                    print("\nAlumno borrado exitosamente.")
-                    input("Presione cualquier tecla para continuar...")
+                        print("\nAlumno borrado exitosamente.")
+                        input("Presione cualquier tecla para continuar...")
+
+            elif int(op) == 4:
+                os.system("clear")
+                lista_alumnos = Alumno.selectListaAlumnos()
+
+                if lista_alumnos is False:
+                    print("Alumno no tiene datos cargados.")
+                    input("Presione una tecla para continuar...")
+                else:
+                    for alumno in lista_alumnos:
+                        print("ID: " + str(alumno.idPersona) +
+                              " - Nombre: " + alumno.nombre +
+                              " - Apellido: " + alumno.apellido +
+                              " - Fecha de Nacimiento: " + str(alumno.fecha_nacimiento) +
+                              " - Curso: " + alumno.curso.codigo)
+                    print("\nLista cargada exitosamente.")
+                    input("Pulse una tecla para continuar...")
+
+    elif int(opcion) == 4:
+        pass

@@ -41,19 +41,22 @@ class Alumno(Persona):
     @staticmethod
     def getAlumno(id):
         students_dictionary = DB().run("select * from Alumno where idAlumno = " + id)
-        for student in students_dictionary:
-            temp_alum = Alumno()
-            temp_alum.setID(student["idAlumno"])
-            temp_alum.setNombre(student["nombre"])
-            temp_alum.setApellido(student["apellido"])
-            temp_alum.setCurso(Curso().getCursoDB(student["Curso_idCurso"]))
+        students_fetch = students_dictionary.fetchall()
 
-            #fecha_spliteada = str(student)
+        if len(students_fetch) == 0:
+            return False
+        else:
+            for student in students_fetch:
+                temp_alum = Alumno()
+                temp_alum.setID(student["idAlumno"])
+                temp_alum.setNombre(student["nombre"])
+                temp_alum.setApellido(student["apellido"])
+                temp_alum.setCurso(Curso().getCursoDB(student["Curso_idCurso"]))
 
-            temp_alum.fecha_nacimiento = student["fecha_nacimiento"]
+                #fecha_spliteada = str(student)
 
-        return temp_alum
+                temp_alum.fecha_nacimiento = student["fecha_nacimiento"]
+            return temp_alum
 
-    @staticmethod
-    def borrarAlumno(id_alumno):
-        DB().run("delete from Alumno where idAlumno = " + str(id_alumno))
+    def borrarAlumno(self):
+        DB().run("delete from Alumno where idAlumno = " + str(self.idPersona))

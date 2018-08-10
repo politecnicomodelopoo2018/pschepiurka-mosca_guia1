@@ -22,11 +22,8 @@ class Curso(object):
     @staticmethod
     def getCursoDB(curs_codigo):
         if type(curs_codigo) is not int:
-            try:
-                curso_data = DB().run("select * from Curso where idCurso = " + str(Curso.getCursoID(curs_codigo)))
-                curs_fetch = curso_data.fetchall()
-            except:
-                return False
+            curso_data = DB().run("select * from Curso where idCurso = " + str(Curso.getCursoID(curs_codigo)))
+            curs_fetch = curso_data.fetchall()
         else:
             curso_data = DB().run("select * from Curso where idCurso = " + str(curs_codigo))
             curs_fetch = curso_data.fetchall()
@@ -42,7 +39,12 @@ class Curso(object):
     def getListaCurso():
         temp_curs_list = []
         curs_dictionary = DB().run("select * from Curso")
-        for curse in curs_dictionary:
+        curs_dictionary_fetch = curs_dictionary.fetchall()
+
+        if len(curs_dictionary_fetch) == 0:
+            return False
+
+        for curse in curs_dictionary_fetch:
             temp_curs = Curso()
             temp_curs.setID(curse["idCurso"])
             temp_curs.setCurso(curse["codigo"])
@@ -55,3 +57,12 @@ class Curso(object):
 
     def actualizarCurso(self):
         DB().run("update Curso set codigo = '" + self.codigo + "' where idCurso = " + str(self.idCurso))
+
+    def eliminarCurso(self):
+        DB().run("delete from Curso where idCurso = " + str(self.idCurso))
+
+
+    def verificarCurso(self):
+        count = DB().run("select count(*) as cantidad from Alumno where Curso_idCurso = " + str(self.idCurso))
+        count_fetch = count.fetchall()
+        return count_fetch
