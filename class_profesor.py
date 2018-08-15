@@ -18,6 +18,11 @@ class Profesor(Persona):
     def eliminarProfesor(self):
         DB().run("delete from Profesor where idProfesor = " + str(self.idPersona))
 
+    def verificarProfesor(self):
+        count_mat = DB().run("select count(*) as cantidad_materias from Materia where Profesor_idProfesor = " + str(self.idPersona))
+        count_fetch = count_mat.fetchall()
+        return count_fetch
+
     @staticmethod
     def getListaProfesor():
         temp_teacher_list = []
@@ -36,9 +41,23 @@ class Profesor(Persona):
         return temp_teacher_list
 
     @staticmethod
+    def getProfesorID(nom, apell):
+        id_teacher = DB().run("select idProfesor from Profesor where nombre = '" + nom + "' and apellido = '" + apell + "'")
+        id_fetch = id_teacher.fetchall()
+        if len(id_fetch) == 0:
+            return False
+        else:
+            return id_fetch[0]["idProfesor"]
+
+    @staticmethod
     def getProfesor(id_profesor):
-        teach_dict = DB().run("select * from Profesor where idProfesor = " + id_profesor)
-        teach_fetch = teach_dict.fetchall()
+        if type(id_profesor) is not int:
+            split_name = id_profesor.split(" ", 1)
+            teach_dict = DB().run("select * from Profesor where idProfesor = " + str(Profesor.getProfesorID(split_name[0], split_name[1])))
+            teach_fetch = teach_dict.fetchall()
+        else:
+            teach_dict = DB().run("select * from Profesor where idProfesor = " + str(id_profesor))
+            teach_fetch = teach_dict.fetchall()
 
         if len(teach_fetch) == 0:
             return False
@@ -52,7 +71,3 @@ class Profesor(Persona):
             temp_teach.setFechaNac(int(fecha_nac[0]), int(fecha_nac[1]), int(fecha_nac[2]))
 
         return temp_teach
-
-    def getMaterias(self):
-        DB().run("select idMateria from Materia"
-                 "where idProfesor = " + self.idPersona)

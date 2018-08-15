@@ -65,7 +65,8 @@ while loop:
                         print("El codigo ingresado es el mismo.")
                         input("Presione cualquier tecla para continuar...")
                     else:
-                        curso.setCurso(new_codigo)
+                        if new_codigo is not '':
+                            curso.setCurso(new_codigo)
 
                         curso.actualizarCurso()
                         print("\nCurso actualizado.")
@@ -132,7 +133,8 @@ while loop:
             print("¿Que desea hacer con Profesor?: \n")
             print("1. Crear Profesor")
             print("2. Editar Profesor")
-            print("3. Eliminar Profesor \n")
+            print("3. Eliminar Profesor")
+            print("4. Mostrar Profesores \n")
 
             op_prof = input("\nIngrese la opcion correspondiente: ")
 
@@ -142,19 +144,26 @@ while loop:
                 apell = input("Ingrese el apellido del profesor: ")
                 fecha_nac = input("Ingrese la fecha de nacimiento del profesor (utilice '/'): ")
 
-                prof = Profesor()
+                nombre_completo = nom + " " + apell
+                verif = Profesor().getProfesor(nombre_completo)
 
-                prof.setNombre(nom)
-                prof.setApellido(apell)
+                if verif is False:
+                    prof = Profesor()
 
-                fecha_nac_split = fecha_nac.split("/", 2)
+                    prof.setNombre(nom)
+                    prof.setApellido(apell)
 
-                prof.setFechaNac(int(fecha_nac_split[2]), int(fecha_nac_split[1]), int(fecha_nac_split[0]))
+                    fecha_nac_split = fecha_nac.split("/", 2)
 
-                prof.insertProfesor()
+                    prof.setFechaNac(int(fecha_nac_split[2]), int(fecha_nac_split[1]), int(fecha_nac_split[0]))
 
-                print("\nSe ha creado el profesor correctamente.")
-                input("Presione cualquier tecla para continuar...")
+                    prof.insertProfesor()
+
+                    print("\nSe ha creado el profesor correctamente.")
+                    input("Presione cualquier tecla para continuar...")
+                else:
+                    print("El profesor ya existe.")
+                    input("Presione cualquier tecla para continuar...")
 
             elif int(op_prof) == 2:
                 os.system("clear")
@@ -170,7 +179,7 @@ while loop:
                               " - Fecha de Nacimiento: " + str(profesor.fecha_nacimiento))
 
                     modif_op = input("\nIngrese el ID del profesor que desea modificar: ")
-                    profesor = Profesor().getProfesor(modif_op)
+                    profesor = Profesor().getProfesor(int(modif_op))
 
                     if profesor is False:
                         print("\nEl ID ingresado no existe.")
@@ -202,16 +211,22 @@ while loop:
                     input("Presione cualquier boton para continuar...")
                 else:
                     for profesor in prof_list:
+                        cant_materias = profesor.verificarProfesor()
                         print("ID: " + str(profesor.idPersona) +
                               " - Nombre: " + profesor.nombre +
                               " - Apellido: " + profesor.apellido +
-                              " - Fecha de Nacimiento: " + str(profesor.fecha_nacimiento))
+                              " - Fecha de Nacimiento: " + str(profesor.fecha_nacimiento) +
+                              " - Cantidad de Materias: " + str(cant_materias[0]["cantidad_materias"]))
 
                     elim_op = input("\nIngrese el ID del profesor que desea eliminar: ")
-                    profesor = Profesor().getProfesor(elim_op)
+                    profesor = Profesor().getProfesor(int(elim_op))
+                    ver_prof = profesor.verificarProfesor()
 
                     if profesor is False:
                         print("\nEl ID ingresado no existe.")
+                        input("Presione cualquier tecla para continuar...")
+                    elif ver_prof[0]["cantidad_materias"] > 0:
+                        print("\nEl profesor no puede ser eliminado porque tiene materias asociadas a el.")
                         input("Presione cualquier tecla para continuar...")
                     else:
                         profesor.eliminarProfesor()
@@ -256,6 +271,9 @@ while loop:
                 fecha_nac_spliteada = fecha_nac.split("/", 2)
                 curso_id = input("Ingrese el curso al que asiste el alumno: ")
 
+                nombre_completo = (nom + " " + apell)
+                verif = Alumno().getAlumno(nombre_completo)
+
                 temp_alum = Alumno()
 
                 temp_alum.setNombre(nom)
@@ -289,7 +307,7 @@ while loop:
                     print("\n¿Que ID desea modificar?")
                     alumno_id = input("Ingrese el ID: ")
 
-                    alumno = Alumno.getAlumno(alumno_id)
+                    alumno = Alumno.getAlumno(int(alumno_id))
 
                     if alumno is False:
                         print("\nEl alumno no existe.")
@@ -325,7 +343,6 @@ while loop:
                 if len(lista_alumnos) == 0:
                     print("Alumno no tiene datos, inserte algun valor primero.")
                     input("Presione cualquier tecla para volver al menu.")
-
                 else:
                     os.system("clear")
                     for alumno in lista_alumnos:
@@ -336,7 +353,7 @@ while loop:
                               " - Curso: " + alumno.curso.codigo)
 
                     alum_id = input("\nIngrese el ID del alumno que desea eliminar: ")
-                    alumno = Alumno().getAlumno(alum_id)
+                    alumno = Alumno().getAlumno(int(alum_id))
                     if alumno is False:
                         print("\nEl alumno no existe.")
                         input("Presione una tecla para continuar...")
@@ -364,4 +381,140 @@ while loop:
                     input("Pulse una tecla para continuar...")
 
     elif int(opcion) == 4:
-        pass
+        lista_profesor = Profesor().getListaProfesor()
+        lista_curso = Curso().getListaCurso()
+
+        if len(lista_curso) == 0 and len(lista_profesor) == 0:
+            print("Profesor y Curso no tienen datos registrados.")
+            input("Presione cualquier tecla para continuar...")
+        elif len(lista_curso) == 0:
+            print("Curso no tiene datos registrados.")
+            input("Presione cualquier tecla para continuar...")
+        elif len(lista_profesor) == 0:
+            print("Profesor no tiene datos registrados.")
+            input("Presione cualquier tecla para continuar...")
+        else:
+            os.system("clear")
+            print("¿Que desea hacer con Materia?: \n")
+            print("1. Crear Materia")
+            print("2. Modificar Materia")
+            print("3. Eliminar Materia")
+            print("4. Mostrar Materia \n")
+            op_mat = input("Ingrese la opcion correspondiente: ")
+
+            if int(op_mat) == 1:
+                os.system("clear")
+                nom = input("Ingrese el nombre de la materia: ")
+                prof = input("Ingrese el profesor que da la materia: ")
+                curs = input("Ingrese el curso en el que se da la materia: ")
+
+                verif = Profesor().getProfesor(prof)
+                verif2 = Curso().getCursoDB(curs)
+
+                if verif is False and verif2 is False:
+                    print("\nNi el profesor ni el curso existen.")
+                    input("Presione cualquier tecla para continuar...")
+                elif verif is False:
+                    print("\nEl profesor no existe.")
+                    input("Presione cualquier tecla para continuar...")
+                elif verif2 is False:
+                    print("\nEl curso no existe.")
+                    input("Presione cualquier tecla para continuar...")
+                else:
+                    temp_mat = Materia()
+                    temp_mat.setNombre(nom)
+                    temp_mat.setProfesor(Profesor().getProfesor(prof))
+                    temp_mat.setCurso(Curso().getCursoDB(curs))
+
+                    temp_mat.insertarMateria()
+
+                    print("\nMateria creada correctamente.")
+                    input("Presione cualquier tecla para continuar...")
+
+            if int(op_mat) == 2:
+                os.system("clear")
+                lista_materias = Materia().selectListaMaterias()
+                if len(lista_materias) == 0:
+                    print("Materia no tiene datos registrados.")
+                    input("Presione cualquier tecla para continuar...")
+                else:
+                    for materia in lista_materias:
+                        print("ID: " + str(materia.idMateria) +
+                              " - Nombre: " + materia.nombre +
+                              " - Profesor: " + materia.profesor.nombre + " " + materia.profesor.apellido +
+                              " - Curso: " + materia.curso.codigo)
+                    mod_op = input("\nIngrese el ID de la materia que desea modificar: ")
+                    temp_mat = Materia().selectMateria(mod_op)
+
+                    if temp_mat is False:
+                        print("\nEl ID ingresado no existe.")
+                        input("Presione cualquier tecla para continuar...")
+                    else:
+                        new_name = input("Ingrese (si quiere) un nuevo nombre: ")
+                        new_prof = input("Ingrese (si quiere) un nuevo profesor: ")
+                        new_curs = input("Ingrese (si quiere) un nuevo curso: ")
+
+                        verif = Profesor().getProfesor(new_prof)
+                        verif2 = Curso().getCursoDB(new_curs)
+
+                        if verif is False and verif2 is False:
+                            print("Ni el profesor ni el curso existen.")
+                            input("Presione cualquier tecla para continuar...")
+                        elif verif is False:
+                            print("El profesor no existe.")
+                            input("Presione cualquier tecla para continuar...")
+                        elif verif2 is False:
+                            print("El curso no existe.")
+                            input("Presione cualquier tecla para continuar...")
+                        else:
+                            if new_name is not '':
+                                temp_mat.setNombre(new_name)
+                            if new_prof is not '':
+                                temp_mat.setProfesor(Profesor().getProfesor(new_prof))
+                            if new_curs is not '':
+                                temp_mat.setCurso(Curso().getCursoDB(new_curs))
+
+                            temp_mat.actualizarMateria()
+
+                            print("\nMateria actualizada correctamente.")
+                            input("Presione cualquier tecla para continuar...")
+
+            if int(op_mat) == 3:
+                os.system("clear")
+                lista_materias = Materia().selectListaMaterias()
+                if len(lista_materias) == 0:
+                    print("Materia no tiene datos registrados.")
+                    input("Presione cualquier tecla para continuar...")
+                else:
+                    for materia in lista_materias:
+                        print("ID: " + str(materia.idMateria) +
+                              " - Nombre: " + materia.nombre +
+                              " - Profesor: " + materia.profesor.nombre + " " + materia.profesor.apellido +
+                              " - Curso: " + materia.curso.codigo)
+                    mod_op = input("\nIngrese el ID de la materia que desea eliminar: ")
+                    temp_mat = Materia().selectMateria(mod_op)
+
+                    if temp_mat is False:
+                        print("El ID ingresado no existe.")
+                        input("Presione cualquier tecla para continuar...")
+                    else:
+                        temp_mat.borrarMateria()
+
+                        print("Materia borrada correctamente.")
+                        input("Presione cualquier tecla para continuar...")
+
+            elif int(op_mat) == 4:
+                os.system("clear")
+                lista_materias = Materia().selectListaMaterias()
+                if len(lista_materias) == 0:
+                    print("Materia no tiene datos registrados.")
+                    input("Presione cualquier tecla para continuar...")
+                else:
+                    for materia in lista_materias:
+                        print("ID: " + str(materia.idMateria) +
+                              " - Nombre: " + materia.nombre +
+                              " - Profesor: " + materia.profesor.nombre + " " + materia.profesor.apellido +
+                              " - Curso: " + materia.curso.codigo)
+
+                    print("\nDatos cargados correctamente.")
+                    input("Presione cualquier tecla para continuar...")

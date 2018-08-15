@@ -39,9 +39,22 @@ class Alumno(Persona):
         return temp_students_list
 
     @staticmethod
+    def getAlumnoID(nom, apell):
+        student_data = DB().run("select * from Alumno where nombre = '" + nom + "', apell = '" + apell + "'")
+        student_fetch = student_data.fetchall()
+        if len(student_fetch) == 0:
+            return False
+        return student_fetch[0]["idAlumno"]
+
+    @staticmethod
     def getAlumno(id):
-        students_dictionary = DB().run("select * from Alumno where idAlumno = " + id)
-        students_fetch = students_dictionary.fetchall()
+        if type(id) is not int:
+            split_name = id.split(" ", 1)
+            students_dictionary = DB().run("select * from Alumno where idAlumno = " + Alumno().getAlumnoID(split_name[0], split_name[1]))
+            students_fetch = students_dictionary.fetchall()
+        else:
+            students_dictionary = DB().run("select * from Alumno where idAlumno = " + str(id))
+            students_fetch = students_dictionary.fetchall()
 
         if len(students_fetch) == 0:
             return False
